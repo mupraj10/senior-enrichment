@@ -3,15 +3,13 @@ var Sequelize = require('sequelize')
 var db = require('../index.js')
 
 
-module.exports = db.define('user', {
+module.exports = db.define('campus', {
   name: {
     type:Sequelize.TEXT,
     allowNull: false
   },
-  //add validate of email?
-  email:{
-    type:Sequelize.STRING,
-    isEmail: true,
+  location:{
+    type:Sequelize.TEXT,
     allowNull:false
   },
   image:{
