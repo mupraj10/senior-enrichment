@@ -12,10 +12,10 @@ module.exports = db.define('user', {
   email:{
     type:Sequelize.STRING,
     isEmail: true,
-    allowNull:false
+    allowNull:true,
   },
   image:{
       type: Sequelize.STRING,
-      allowNull:false
+      allowNull:true
   }
 })
