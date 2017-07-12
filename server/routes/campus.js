@@ -2,7 +2,6 @@ const express = require('express');
 const router = require('express').Router()
 const models = require('../../db/models');
 const Campus = models.Campus;
-const id = req.params.campusId;
 
 
 
@@ -17,6 +16,7 @@ router.get('/', function (req, res, next) {
 
 // GET one campus
 router.get('/:campusId', function (req, res, next) {
+	const id = req.params.campusId;
 	Campus.findById(id)
 	.then(singleCampuses => res.send(singleCampuses))
 	.catch(next);
@@ -24,6 +24,7 @@ router.get('/:campusId', function (req, res, next) {
 
 // GET students at campus
 router.get('/:campusId/students', function (req, res, next) {
+	const id = req.params.campusId;
 	Campus.findById(id)
 	.then(singleCampus => res.send(singleCampus.getStudents())) //figure out how getStudents works
 	.then((students) => res.json(students))
@@ -43,6 +44,7 @@ router.post('/', function (req, res, next) {
 
 //update campus info 
 router.put('/:campusId', function (req, res, next) {
+	const id = req.params.campusId;
 	Campus.findById(id)
 	.then((campus) => campus.update(req.body))
 	.then((updatedCampus) => campus)
@@ -51,6 +53,7 @@ router.put('/:campusId', function (req, res, next) {
 
 //delete a campus 
 router.delete('/:campusId', function (req, res, next) {
+	const id = req.params.campusId;
 	Campus.destroy({
 		where: { id }
 	}).then(deleteCampus => res.json(deleteCampus))

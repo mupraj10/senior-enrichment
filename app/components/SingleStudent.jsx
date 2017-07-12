@@ -3,12 +3,12 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 
-export default class Campus extends Component {
+export default class SingleStudent extends Component {
 
   constructor () {
     super();
     this.state = {
-      campus: {}
+      student: {}
     }; 
   }
 
@@ -16,15 +16,15 @@ export default class Campus extends Component {
     axios.get('/api/students')
       .then(res => res.data)
       .then(students => {
-        this.setState({ campus })
+        this.setState({ students })
       });
-
+      console.log(this.state.students);
   }
     
 
   render () {
 
-    const campus = this.state.students;
+    const students = this.state.students;
 
     return (
       <div>
