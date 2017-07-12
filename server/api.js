@@ -19,4 +19,4 @@ api.use('/students', require('./routes/student'));
 api.use('/campuses', require('./routes/campus'));
 
 
-module.exports = api
+module.exports = api;
