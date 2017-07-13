@@ -1,50 +1,57 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import {fetchCampuses, getCampuses}  from '../actions/campusActions'
+import { connect } from 'react-redux';
 
 
-export default class Campuses extends Component {
+ class Campuses extends Component {
   
-  constructor() {
-    super();
-    this.state = {
-      campuses: []
-    };
+  constructor(props) {
+    super(props);
   }
   
-  componentDidMount() {
-    axios.get('/api/campuses')
-    .then(res => res.data)
-    .then(campuses => {
-      this.setState({ campuses })
-    });
-  }
+
   
-  
+  // renderCampuses(campuses)
   render() {
-    
-    const campuses = this.state.campuses;
+
     
     return (
       <div>
-      <h3 className="titles" > Campuses </h3>
-      {
-        campuses.map(campuses => (
-          <div className="col-xs-4" key={campuses.id}>
-          <Link className="thumbnail" to={`/campuses/${campuses.id}`}>
-          <img src= {campuses.image} />
+        <h3 className="titles" > Campuses </h3>
+        <div className="container">
+          {this.props.campuses.map(campuses => (
+      <div className="col-xs-4" key={campuses.id}>
+        <Link className="thumbnail" to={`/campuses/${campuses.id}`}>
+          <img src={campuses.image} />
           <div className="caption">
-          <h5>
-          <span >{campuses.name}</span>
-          </h5>
+            <h5>
+              <span >{campuses.name}</span>
+            </h5>
           </div>
-          </Link>
-          </div>
-        ))}
+        </Link>
+      </div>
+        ))
+  }
         </div>
-        
-      );
+      </div>
+    );
+  }
+}
+
+  
+const mapStateToProps = (state) => {
+  return {
+    campuses: state.campuses
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getCampuses: () => {
+      dispatch(fetchCampuses())
     }
   }
-  
-  
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Campuses);

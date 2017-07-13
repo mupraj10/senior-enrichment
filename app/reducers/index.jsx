@@ -3,8 +3,6 @@ import studentReducer from './studentReducer';
 import campusReducer from './campusReducer';
 
 
-// const initialState = {}
-
 const rootReducer = combineReducers({
   studentReducer,
   campusReducer

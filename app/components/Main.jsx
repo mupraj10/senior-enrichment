@@ -15,12 +15,14 @@ import SingleStudent from './SingleStudent';
 import AddStudent from './AddStudent';
 import AddCampus from './AddCampus';
 
+import {fetchStudents}  from '../actions/studentActions.js';
+import {fetchCampuses} from '../actions/campusActions.js';
+
+
 
 export default class Main extends Component {
-  constructor(){
-    super();
-  }
 
+  
   render () {
     return (
       <Router >

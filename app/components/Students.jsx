@@ -1,35 +1,39 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
+import store from '../store'
+import {getStudents, fetchStudents} from '../actions/studentActions'
+import { connect } from 'react-redux';
 
 
+//presentation component - displays things and delegates all the actions to the container component 
+//container component - 
+ 
 export default class Students extends Component {
 
-  constructor () {
-    super();
-    this.state = {
-      students: []
-    }; 
+  constructor (props) {
+    super(props);
+    this.state = store.getState();
   }
 
   componentDidMount () {
-    axios.get('/api/students')
-      .then(res => res.data)
-      .then(students => {
-        this.setState({ students })
-      });
+    this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
   }
-    
+
+  componentWillUnmount () {
+    this.unsubscribe();
+  }
+
+
 
   render () {
-
+    console.log("STATE",store);
     const students = this.state.students;
 
     return (
       <div>
-      <h3> Students </h3>
-          {
-        students.map(students => (
+        <h3> Students </h3>
+        <div className="container">
+          { students.map(students => {
           <div className="col-xs-4" key={students.id}>
             <Link className="thumbnail" to={`/students/${students.id}`}>
               <img src= {students.image} />
@@ -40,10 +44,26 @@ export default class Students extends Component {
               </div>
             </Link>
           </div>
-          ))}
-    </div>
-
+        })
+  };
+        </div>
+      </div>
     );
   }
 }
 
+// const mapStateToProps = (state, ownProps) => {
+//   console.log("STATESTUDENTS",state.students);
+//   return {
+//     students: state.students
+//   }
+  
+// }
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     getStudents: () => dispatch(action.getStudents())
+//   };
+// }
+
+// export default connect(mapStateToProps, mapDispatchToProps)(Students);

@@ -6,3 +6,7 @@
     text-align: center;
     color: greenyellow;
 }
+
+.adding{
+    align-content: flex-end
+}

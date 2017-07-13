@@ -1,43 +1,33 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
 
 
 export default class SingleCampus extends Component {
 
-  constructor () {
-    super();
-    this.state = {
-      campus: {}
-    }; 
+  constructor (props) {
+    super(props);
   }
 
   componentDidMount () {
-    axios.get('/api/students')
-      .then(res => res.data)
-      .then(students => {
-        this.setState({ campus })
-      });
+    this.props.getCampusById(this.props.match.params.id);
+  }
+  
+  renderStudentsInCampus(){
 
   }
-    
 
   render () {
 
-    const campus = this.state.students;
+    const campus = this.prop.campus;
 
     return (
       <div>
-      <h3> Students </h3>
-         {
-        students.map(students => (
-            <li key= {students.id}>
-            <ul>{students.name}</ul>
-            </li>))
-      }
+      <div className="container">
+      <h3> Campus </h3>
+      <img src={campus.image}></img>
+      <p className= 'student'>{campus.location}</p>
+      </div>
     </div>
-
     );
   }
 }
-

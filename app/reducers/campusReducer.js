@@ -1,5 +1,5 @@
 //import actions 
-import * as campusActions from '../actions/campusActions';
+import {FETCH_CAMPUSES, FETCH_CAMPUS_BY_ID, CREATE_CAMPUS} from '../actions/campusActions'
 
 const initialState = {
   campuses:[],
@@ -12,13 +12,13 @@ export default function campusReducer (state = initialState, action) {
     
     case FETCH_CAMPUSES:
     // return the new state of campuses array with all 
-    return  Object.assign({}, state, state.campuses = action.campuses);
+    return  Object.assign({}, state, {campuses:action.campuses});
     
     case FETCH_CAMPUS_BY_ID:
-      return Object.assign({}, state, state.campus = action.campus);
+      return Object.assign({}, state, {campus:action.campus});
       
       case CREATE_CAMPUS:
-        return Object.assign({}, state, state.campuses.concat(action.campus) );;
+        return Object.assign({}, state, {campuses: campuses.concat(action.campus)} );;
         
         default:
         return state;
