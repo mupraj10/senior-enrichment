@@ -37,7 +37,7 @@ router.post('/', function (req, res, next) {
 	Campus.create({
 		name: req.body.name,
 		location: req.body.location,
-		imageUrl: req.body.imageUrl
+		image: req.body.image
 	})
 	.then(newCampus => res.status(201).json(newCampus));
 });
@@ -54,9 +54,8 @@ router.put('/:campusId', function (req, res, next) {
 //delete a campus 
 router.delete('/:campusId', function (req, res, next) {
 	const id = req.params.campusId;
-	Campus.destroy({
-		where: { id }
-	}).then(deleteCampus => res.json(deleteCampus))
+	Campus.destroy({ where: { id } })
+	.then(deleteCampus => res.json(deleteCampus))
 	.catch(next);
 });
 

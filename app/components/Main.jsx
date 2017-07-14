@@ -16,6 +16,8 @@ import SingleCampus from './SingleCampus';
 import SingleStudent from './SingleStudent';
 import AddStudent from './AddStudent';
 import AddCampus from './AddCampus';
+import DeleteCampus from './DeleteCampus';
+import DeleteStudent from './DeleteStudent';
 
 //import thunks
 import {fetchCampuses} from '../actions/campusActions';
@@ -45,6 +47,9 @@ export default class Main extends Component {
             <Route exact path="/students" component={Students} />
             <Route exact path="/students/:studentId" component={SingleStudent} />
             <Route path="/addstudent" component={AddStudent} />
+            <Route path ="/deletecampus/:campusId" component={DeleteCampus} />
+            <Route path ="/deletestudent/:studentId" component={DeleteStudent} />
+            
             </Switch>
         </div>
     </Router>

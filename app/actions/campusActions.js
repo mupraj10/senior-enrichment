@@ -4,8 +4,9 @@ import axios from 'axios';
 
 export const GET_CAMPUSES = 'GET_CAMPUSES';
 export const GET_CAMPUS_BY_ID =  'GET_CAMPUS_BY_ID';
+export const GET_CAMPUS_NAME = 'GET_CAMPUS_NAME';
 export const CREATE_CAMPUS = 'CREATE_CAMPUS';
-
+export const DELETE_CAMPUS = 'DELETE_CAMPUS';
 // ACTION CREATORS
 
 export function getCampuses (campuses) {
@@ -17,10 +18,17 @@ export function getCampusById (campus) {
     const action = { type: GET_CAMPUS_BY_ID, campus};
     return action;
 }
-
+export function getCampusName (content){
+    const action = {type: GET_CAMPUS_NAME, content};
+    return action;
+}
 export function createCampus (addedCampus) {
     const action = { type: CREATE_CAMPUS, addedCampus};
     return action;
+}
+
+export function deleteCampus(campusId){
+    const action = { type: DELETE_CAMPUS, campusId}
 }
 
 // THUNK CREATORS 
@@ -53,14 +61,28 @@ export function fetchCampusById () {
     };
 };
 
-export function newCampus (campus, image) {
+
+export function newCampus (name, location, image) {
     return function thunk (dispatch){
-        return axios.post('/api/campuses/', {campus,image})
+        return axios.post('/api/campuses', {name,location,image})
         .then(res => res.data)
         .then(newCampus => {
-            const action = getCampuses();
+            const action = getCampuses(newCampus);
             dispatch(action);
         })
         .catch(error => { console.log(error) });
     }
 };
+
+export function removeCampus(id){
+    return function thunk(dispatch){
+        return axios.delete(`/api/campuses/${id}`)
+        .then(res => res.data)
+        .then(deletedCampus => {
+            const action = getCampuses();
+            alert("You have deleted the campus!");
+            dispatch(action);
+        })
+        .catch(error => { console.log("thunk",error) });
+    }
+}

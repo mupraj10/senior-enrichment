@@ -1,39 +1,63 @@
-
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import store from '../store';
+import {newCampus, getCampusName} from '../actions/campusActions'
 
 
 export default class AddCampus extends Component {
     constructor(){
         super();
+        this.state = store.getState();
+        this.handleChange.bind(this);
+        this.handleSubmit.bind(this);
     }
+    componentDidMount() {
+        this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
+    }
+
+    handleChange(event){
+        const content = event.target.name.value
+        // console.log("event target", event.target.value);
+        store.dispatch(getCampusName(content));
+    }
+
+    handleSubmit(event){
+        event.preventDefault();
+        const name = event.target.CampusName.value;
+        // console.log('campus:',name)
+        const location = event.target.CampusLocation.value;
+        const image = event.target.CampusImage.value;
+        store.dispatch(newCampus(name,location,image));
+    };
+  
     render(){
     return (
-        <form onSubmit>
+        <form onSubmit={this.handleSubmit}>
         <div className="form-group">
             <label htmlFor="name">Enter your information here:</label>
             <input
-            //   value={newChannelEntry}
-            //   onChange={handleChange}
+            onChange={this.handleChange}
             className="form-control"
             type="text"
             name="CampusName"
             placeholder="Enter your Campus Name"
             />
             <input
-            //   value={newChannelEntry}
-            //   onChange={handleChange}
+              onChange={this.handleChange}
             className="form-control"
             type="text"
-            name="StudentEmail"
+            name="CampusLocation"
             placeholder="Enter your Campus Location"
             />
             <input
-            //   value={newChannelEntry}
-            //   onChange={handleChange}
+              onChange={this.handleChange}
             className="form-control"
             type="text"
-            name="StudentImage"
+            name="CampusImage"
             placeholder="Insert a Campus Image: Please include a link with .jpg or .png!"
             />
         </div>

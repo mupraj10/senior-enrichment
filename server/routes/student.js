@@ -22,11 +22,11 @@ router.get('/:studentId',function(req,res,next){
 
 //POST new student 
 router.post('/',function(req,res,next){
-	const id = req.params.studentId;
 	Student.create({
 		name: req.body.name,
 		email: req.body.email,
-		CampusId: req.body.campus_id
+		image: req.body.image,
+		campusId: req.body.campusId
 	})
 	.then(newStudent => res.json(newStudent))
 	.catch(next);
@@ -43,7 +43,7 @@ router.put('/:studentId', function(req,res,next){
 })
 
 //delete a student 
-router.delete('/students/:studentId', function(req,res,next){
+router.delete('/:studentId', function(req,res,next){
 	const id = req.params.studentId;
 	Student.destroy({ where: { id } })
 	.then(deleteStudent => res.json(deleteStudent));

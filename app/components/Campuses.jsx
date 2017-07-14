@@ -38,11 +38,7 @@ import store from '../store';
                 <div className="col-xs-4" key={campuses.id}>
                   <Link className="thumbnail" to={`/campuses/${campuses.id}`}>
                     <img src={campuses.image} />
-                    <div className="caption">
-                      <h5>
-                        <span >{campuses.name}</span>
-                      </h5>
-                    </div>
+                        <h5>{campuses.name}</h5>
                   </Link>
                 </div>
               ))
