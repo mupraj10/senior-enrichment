@@ -14,4 +14,4 @@ Student.belongsTo(Campus);
 Campus.hasMany(Student);
 
 
-module.exports = { Student, Campus}
+module.exports = { Student, Campus};
