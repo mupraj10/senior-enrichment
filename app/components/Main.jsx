@@ -4,8 +4,10 @@ import {render} from 'react-dom'
 import { Provider } from 'react-redux';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
-
+//import store
 import store from '../store';
+
+//import components
 import Home from './Home';
 import Navbar from './Navbar';
 import Campuses from './Campuses';
@@ -15,12 +17,19 @@ import SingleStudent from './SingleStudent';
 import AddStudent from './AddStudent';
 import AddCampus from './AddCampus';
 
-import {fetchStudents}  from '../actions/studentActions.js';
-import {fetchCampuses} from '../actions/campusActions.js';
-
-
+//import thunks
+import {fetchCampuses} from '../actions/campusActions';
+import {fetchStudents} from '../actions/studentActions';
 
 export default class Main extends Component {
+
+  componentDidMount(){
+    const studentThunk = fetchStudents();
+    const campusThunk = fetchCampuses();
+    store.dispatch(studentThunk);
+    store.dispatch(campusThunk);
+    // console.log("in main mount")
+  }
 
   
   render () {

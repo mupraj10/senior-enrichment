@@ -2,72 +2,65 @@ import axios from 'axios';
 
 //ACTION TYPES 
 
-const FETCH_CAMPUSES = 'FETCH_CAMPUSES';
-const FETCH_CAMPUS_BY_ID =  'FETCH_CAMPUS_BY_ID';
-const CREATE_CAMPUS = 'CREATE_CAMPUS';
+export const GET_CAMPUSES = 'GET_CAMPUSES';
+export const GET_CAMPUS_BY_ID =  'GET_CAMPUS_BY_ID';
+export const CREATE_CAMPUS = 'CREATE_CAMPUS';
 
 // ACTION CREATORS
 
-export function fetchCampuses (campuses) {
-    return { type: FETCH_CAMPUSES, campuses};
+export function getCampuses (campuses) {
+    const action = { type: GET_CAMPUSES, campuses};
+    return action;
 }
 
-export function fetchCampusById (campus) {
-    return { type: FETCH_CAMPUS_BY_ID, campus};
+export function getCampusById (campus) {
+    const action = { type: GET_CAMPUS_BY_ID, campus};
+    return action;
 }
 
-export function createCampus (campus) {
-    return { type: CREATE_CAMPUS, campus};
+export function createCampus (addedCampus) {
+    const action = { type: CREATE_CAMPUS, addedCampus};
+    return action;
 }
 
+// THUNK CREATORS 
 
-export function getCampuses () {
-    //returns a dispatch action 
-    return(dispatch) => {
+export function fetchCampuses () {
+    // thunks returns a dispatch action 
+    return function thunk (dispatch) {
         //sends axios request to get all campuses
         return axios.get('/api/campuses')
         .then(res => res.data)
         .then(campuses => {
+            const action = getCampuses(campuses)
             //dispatches another action for data that is found
-            // function in here is the one that related to action creator
-            dispatch(fetchCampuses(campuses));
+            //function in here is the action creator with the information found by axios request. 
+            dispatch(action);
         })
-        .catch(error => {
-            throw (error);
-        });
+        .catch(error => { console.log(error) });
     };
 };
 
-export function getCampusesById () {
-    //returns a dispatch action 
-    return(dispatch) => {
-        //sends axios request to get a campus data
-        return axios.get(`/api/campuses/${campusid}`)
+export function fetchCampusById () {
+    return function thunk (dispatch){
+        return axios.get(`/api/campuses/${campusId}`)
         .then(res => res.data)
         .then(campus => {
-            //dispatches another action for data that is found
-            // function in here is the one that related to action creator
-            dispatch(fetchCampusesById(campus));
+            const action = getCampusById(campus);
+            dispatch(action);
         })
-        .catch(error => {
-            throw (error);
-        });
+        .catch(error => { console.log(error) });
     };
 };
 
-export function newCampus (campus) {
-    //returns a dispatch action 
-    return(dispatch) => {
-        //sends axios request to post a campus data
-        return axios.post('/api/campuses/', campus)
+export function newCampus (campus, image) {
+    return function thunk (dispatch){
+        return axios.post('/api/campuses/', {campus,image})
         .then(res => res.data)
-        .then(campus => {
-            //dispatches another action for data that is found
-            // function in here is the one that related to action creator
-            dispatch(createCampus(campus));
+        .then(newCampus => {
+            const action = getCampuses();
+            dispatch(action);
         })
-        .catch(error => {
-            throw (error);
-        });
+        .catch(error => { console.log(error) });
     }
 };

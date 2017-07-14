@@ -26,17 +26,18 @@ export default class Students extends Component {
 
 
   render () {
-    console.log("STATE",store);
-    const students = this.state.students;
+    // console.log("STATE",store);
+    const students = this.state.studentReducer.students;
+    // console.log('Students', students)
 
     return (
       <div>
         <h3> Students </h3>
-        <div className="container">
-          { students.map(students => {
+        <div>
+         {students.map(students => (
           <div className="col-xs-4" key={students.id}>
             <Link className="thumbnail" to={`/students/${students.id}`}>
-              <img src= {students.image} />
+              <img src={students.image} />
               <div className="caption">
                 <h5>
                   <span >{students.name}</span>
@@ -44,8 +45,7 @@ export default class Students extends Component {
               </div>
             </Link>
           </div>
-        })
-  };
+        ))}
         </div>
       </div>
     );

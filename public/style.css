@@ -1,12 +1,7 @@
 
-*{
+body{
     background-color: lightslategray;
 }
-.hometitle{
-    text-align: center;
-    color: greenyellow;
-}
-
-.adding{
-    align-content: flex-end
+.inputform{
+    text-align: right;
 }

@@ -2,72 +2,64 @@ import axios from 'axios';
 
 //ACTION TYPES 
 
-export const FETCH_STUDENTS = 'FETCH_STUDENTS';
-export const FETCH_STUDENT_BY_ID =  'FETCH_STUDENT_BY_ID';
+export const GET_STUDENTS = 'GET_STUDENTS';
+export const GET_STUDENT_BY_ID =  'GET_STUDENT_BY_ID';
 export const CREATE_STUDENT = 'CREATE_STUDENT';
 
 // ACTION CREATORS
 
-export function fetchStudents (students) {
-    return { type: FETCH_STUDENTS, students};
+export function getStudents (students) {
+    const action = { type: GET_STUDENTS, students}
+    return action;
 }
 
-export function fetchStudentsById (student) {
-    return { type: FETCH_STUDENTS_BY_ID, student};
+export function getStudentsById (student) {
+    const action = { type: GET_STUDENTS_BY_ID, student}
+    return action;
 }
 
-export function createStudent (student) {
-    return { type: CREATE_STUDENT, student};
+export function createStudent (addedStudent) {
+    const action = { type: CREATE_STUDENT, addedStudent};
+    return action;
 }
 
+//THUNK CREATORS: 
 
-export function getStudents () {
-    //returns a dispatch action 
-    return(dispatch) => {
+
+export function fetchStudents () {
+    return function thunk (dispatch){
         //sends axios request to get all students
-        return axios.post('/api/students')
+        return axios.get('/api/students')
         .then(res => res.data)
         .then(students => {
-            //dispatches another action for data that is found
-            // function in here is the one that related to action creator
-            dispatch(fetchStudents(students));
+            const action = getStudents(students)
+            dispatch(action);
         })
-        .catch(error => {
-            throw (error);
-        });
+        .catch(error => { console.log ("this",error) });
     };
 };
 
-export function getStudentsById () {
-    //returns a dispatch action 
-    return(dispatch) => {
-        //sends axios request to get a student data
-        return axios.get(`/api/students/${studentid}`)
+export function fetchStudentsById () {
+    return function thunk (dispatch){
+        return axios.get(`/api/students/${studentId}`)
         .then(res => res.data)
         .then(student => {
-            //dispatches another action for data that is found
-            // function in here is the one that related to action creator
-            dispatch(fetchStudentsById(student));
+            const action = getStudentsById(student);
+            dispatch(action);
         })
-        .catch(error => {
-            throw (error);
-        });
+        .catch(error => { console.log (error) });
     };
 };
 
-export function newStudent (student) {
-    //returns a dispatch action 
-    return(dispatch) => {
-        //sends axios request to post a student data
-        return axios.get('/api/students/', student)
+export function newStudent (student, email, image, campusId) {
+    return function thunk (dispatch){
+        return axios.post('/api/students', {student, email, image, campusId})
         .then(res => res.data)
-        .then(student => {
-            //dispatches another action for data that is found
-            // function in here is the one that related to action creator
-            dispatch(createStudent(student));
+        .then(newStudent => {
+            const action = getStudents();
+            console.log(newStudent);
+            dispatch(action);
         })
-        .catch(error => {
-            throw (error);
-        });
+        .catch(error => { console.log (error) });
     }
 };
